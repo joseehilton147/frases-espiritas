@@ -25,12 +25,13 @@ public class Frase {
     @Column(nullable = false)
     private String conteudo;
 
-    // A anotação @Enumerated(EnumType.STRING) garante que o valor seja salvo como uma String no banco.
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusFrase status = StatusFrase.PENDENTE;
+    private StatusFrase status;
 
+    @Column(name = "data_criacao")
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
+    @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao = LocalDateTime.now();
+
 }

@@ -1,25 +1,22 @@
-services:
-    # Serviço do PostgreSQL
-    postgres:
-        image: postgres:15-alpine
-        container_name: postgres
-        environment:
-            POSTGRES_DB: frases-espiritas
-            POSTGRES_USER: root
-            POSTGRES_PASSWORD: root
-        ports:
-            - "5432:5432"
-        volumes:
-            - db_data:/var/lib/postgresql/data
-
-    # Serviço da aplicação Spring Boot
-    spring:
-        build: .
-        container_name: spring
-        ports:
-            - "8080:8080"
-        depends_on:
-            - postgres
-
-volumes:
-    db_data:
+# Usa a imagem do Maven com Java 23 para compilar o projeto
+FROM maven:3.9.6-eclipse-temurin-23 AS builder
+WORKDIR /app
+  
+  # Copia os arquivos do projeto para o container
+COPY . .
+  
+  # Faz o build do projeto e gera o JAR
+RUN mvn clean package
+  
+  # Usa a imagem do OpenJDK 23 para rodar a aplicação
+FROM eclipse-temurin:23-jdk-slim
+WORKDIR /app
+  
+  # Copia o JAR gerado na etapa anterior
+COPY --from=builder /app/target/frases-espiritas.jar app.jar
+  
+  # Expõe a porta da aplicação
+EXPOSE 8080
+  
+  # Define o comando para rodar a aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]
