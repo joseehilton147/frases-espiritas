@@ -14,7 +14,7 @@ frases-espiritas/
 │── frontend/       # Frontend desenvolvido em Next.js
 │── .gitignore      # Arquivos ignorados pelo Git
 │── README.md       # Documentação do projeto
-│── docker-compose.yml  # (Opcional) Para rodar tudo junto via Docker
+│── docker-compose.yml  # Para rodar tudo junto via Docker
 ```
 
 ### **📂 Backend (`/backend`)**
@@ -52,47 +52,33 @@ frases-espiritas/
 
 ### **🔹 Pré-requisitos**
 Antes de começar, certifique-se de ter instalado:
+- **Docker e Docker Compose** (para rodar tudo junto)
 - **Java 17**
 - **Node.js** (recomendado via `Volta`)
 - **PostgreSQL** (caso queira rodar localmente sem Docker)
 - **Maven**
 
-### **🔹 Rodando o Backend**
-1. Acesse a pasta do backend:
-   ```sh
-   cd backend
-   ```
-2. Configure o banco de dados no `application.properties`.
-3. Rode a aplicação Spring Boot:
-   ```sh
-   mvn spring-boot:run
-   ```
-4. O backend estará disponível em `http://localhost:8080`.
-
-### **🔹 Rodando o Frontend**
-1. Acesse a pasta do frontend:
-   ```sh
-   cd frontend
-   ```
-2. Instale as dependências:
-   ```sh
-   npm install
-   ```
-3. Rode o projeto Next.js:
-   ```sh
-   npm run dev
-   ```
-4. O frontend estará disponível em `http://localhost:3000`.
-
----
-
-## 🐳 Rodando com Docker (Opcional)
+### **🔹 Rodando com Docker (Recomendado)**
 Se quiser rodar tudo com **Docker**, basta executar:
 
 ```sh
 docker-compose up --build
 ```
+
 Isso iniciará o **backend, frontend e banco de dados juntos**.
+
+Para parar os containers:
+
+```sh
+docker-compose down
+```
+
+Caso queira resetar o banco de dados e subir tudo novamente:
+
+```sh
+docker-compose down -v
+docker-compose up --build
+```
 
 ---
 
